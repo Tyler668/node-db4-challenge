@@ -18,20 +18,29 @@ server.get('/api/recipes', (req, res) => {
 });
 
 server.get('/api/recipes/:id/ingredients', (req, res) => {
-    const { id } = req.params.id;
+
+    const { id } = req.params;
 
     Recipes.getShoppingList(id)
-        .then(list => {
-            if (list.length) {
-                res.json(list);
-            } else {
-                res.status(404).json({ message: 'Could not find get ingredients for that ID' })
-            }
+        .then(ingredients => {
+            res.json(ingredients);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Failed to get ingredients' });
+            res.status(500).json({ message: 'Failed to get ingredients.' });
         });
 });
 
+
+server.get('/api/recipes/:id', (req, res) => {
+    const { id } = req.params;
+
+    Recipes.getInstructions(id)
+        .then(instructions => {
+            res.json(instructions)
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'Failed to get instructions' });
+        });
+});
 
 module.exports = server;
