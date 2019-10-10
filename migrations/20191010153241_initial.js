@@ -21,18 +21,17 @@ exports.up = function(knex) {
     .references('id')
     .inTable('recipes')
     .onUpdate('CASCADE')
-    .onDelete('RESTRICT');
+    .onDelete('CASCADE');
 
   tbl
     .integer('ingredient_id')
     .unsigned()
     .notNullable()
     .references('id')
-    .inTable('ingredients')   //potential error, maybe swap
+    .inTable('ingredients')  
     .onUpdate('CASCADE')
-    .onDelete('RESTRICT');
+    .onDelete('CASCADE');
 
-  tbl.unique(['recipe_id', 'ingredient_id']);
   })
 
 };
